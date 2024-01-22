@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('checkout code- github') {
       steps {
-        git(url: 'https://github.com/giladouzan1/AdvancedProject.git', branch: 'master')
+        git(url: 'https://github.com/giladouzan1/AdvancedProject.git', branch: 'main')
       }
     }
 
