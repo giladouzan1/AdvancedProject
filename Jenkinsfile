@@ -9,6 +9,8 @@ pipeline {
 
     stage('run rest_app') {
       steps {
+        sh 'python3 - m venv venv'
+        sh 'source venv/bin/activate'
         sh 'pip3 install -r requirements.txt'
         sh 'nohup python3 rest_app.py &'
       }
