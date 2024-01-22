@@ -3,12 +3,14 @@ pipeline {
   stages {
     stage('checkout code- github') {
       steps {
-        git(url: 'https://github.com/giladouzan1/AdvancedProject.git', branch: 'master')
+        git(url: 'https://github.com/giladouzan1/AdvancedProject.git', branch: 'main')
       }
     }
 
     stage('run rest_app') {
       steps {
+        sh 'python -m venv venv'
+        sh 'source venv/bin/activate'
         sh 'pip3 install -r requirements.txt'
         sh 'nohup python3 rest_app.py &'
       }
