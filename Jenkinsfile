@@ -4,6 +4,7 @@ pipeline {
     stage('Install Dependencies') {
             steps {
                 script {
+                    sh 'chmod -R 777 /var/lib/apt/lists'
                     sh 'apt-get update'
                     sh 'apt-get install -y python3 python3-pip'
                 }
