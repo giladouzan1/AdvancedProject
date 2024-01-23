@@ -1,6 +1,12 @@
 pipeline {
   agent any
   stages {
+    stage('Install Dependencies') {
+            steps {
+                script {
+                    sh 'apt-get update && apt-get install -y python3 python3-pip'
+                }
+            }
     stage('checkout code- github') {
       steps {
         git(url: 'https://github.com/giladouzan1/AdvancedProject.git', branch: 'main')
