@@ -10,12 +10,12 @@ db_connector = DBConnector()
 @app.route('/users/<int:user_id>', methods=['POST'])
 def create_user(user_id):
     try:
-        user_name = request.json.get('user_name')
+        user_name = request.json.get('user_name')[1]
         if db_connector.user_exists(user_id):
             return jsonify({"status": "error", "reason": "id already exists"}), 500
 
         db_connector.add_user(user_id, user_name)
-        return jsonify({"status": "ok", "user_added": user_name}), 200
+        return {'status': 'ok', 'user_name': user_name}, 200
 
     except Exception as e:
         return jsonify({"status": "error", "reason": str(e)}), 500
@@ -26,7 +26,7 @@ def get_user(user_id):
     try:
         user_name = db_connector.get_user(user_id)
         if user_name:
-            return jsonify({"status": "ok", "user_name": user_name}), 200
+            return {'status': 'ok', 'user_name': user_name[1]}, 200
         else:
             return jsonify({"status": "error", "reason": "no such id"}), 500
 
@@ -37,10 +37,10 @@ def get_user(user_id):
 @app.route('/users/<int:user_id>', methods=['PUT'])
 def update_user(user_id):
     try:
-        user_name = request.json.get('user_name')
+        user_name = request.json.get('user_name')[1]
         if db_connector.user_exists(user_id):
             db_connector.update_user(user_id, user_name)
-            return jsonify({"status": "ok", "user_updated": user_name}), 200
+            return {'status': 'ok', 'user_name': user_name}, 200
         else:
             return jsonify({"status": "error", "reason": "no such id"}), 500
 
@@ -53,7 +53,7 @@ def delete_user(user_id):
     try:
         if db_connector.user_exists(user_id):
             db_connector.delete_user(user_id)
-            return jsonify({"status": "ok", "user_deleted": user_id}), 200
+            return {'status': 'ok', 'Deleted_user_id': user_id}, 200
         else:
             return jsonify({"status": "error", "reason": "no such id"}), 500
 

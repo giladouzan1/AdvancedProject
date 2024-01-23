@@ -14,6 +14,7 @@ def user(user_id):
         if request.method == 'GET':
             res = requests.get(f'http://127.0.0.1:5000/users/{user_id}')
             name = res.json()["user_name"]
+            print(name)
             # user_name = mdb_connector.select_id(user_id)
             if name is None:
                 return "<H1 id='error'>" 'no such user' + user_id + "</H1>"
