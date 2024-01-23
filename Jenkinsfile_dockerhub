@@ -14,12 +14,6 @@ pipeline {
       }
     }
 
-    stage('run web_app') {
-      steps {
-        sh 'nohup python3 web_app.py'
-      }
-    }
-
     stage('run backend_testing') {
       steps {
         sh 'pwd'
@@ -33,6 +27,13 @@ pipeline {
         sh 'python3 docker_backend_testing.py'
       }
     }
+    environment {
+        DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials-id')
+        GITHUB_CREDENTIALS = credentials('github-credentials-id')
+        GITHUB_REPO_URL = 'https://github.com/<YOUR_GITHUB_REPO>.git'
+        IMAGE_NAME = 'your-docker-image-name'
+    }
+
     stage('run clean_environment') {
       steps {
         sh 'python3 clean_environment.py'
