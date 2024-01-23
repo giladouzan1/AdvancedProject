@@ -2,7 +2,7 @@ import mysql.connector
 import pymysql
 
 
-connection = pymysql.connect(host='127.0.0.1', user='root', password='pythoncourse', database='my_db')
+connection = pymysql.connect(host='127.0.0.1', user='root', password='pythoncourse', database='MyDB_AdvancedProject')
 
 #create the table
 cursor = connection.cursor()

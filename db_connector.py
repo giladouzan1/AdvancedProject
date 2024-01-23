@@ -11,7 +11,7 @@ class DBConnector:
     #         database='MyDB_AdvancedProject'
     #     )
 
-    def __init__(self, host='localhost', port=3306, user='root', passwd='pythoncourse', db='my_db'):
+    def __init__(self, host='localhost', port=3306, user='root', passwd='pythoncourse', db='MyDB_AdvancedProject'):
         try:
             self.db = db
             self.host = host
