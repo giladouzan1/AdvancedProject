@@ -19,7 +19,7 @@ class BackEndTests:
     def check_data(self):
         existing_name = db_connector.select_id(self.user_id)
         print(existing_name)
-        print(existing_name[1])
+        # print(existing_name[1])
         assert self.name == existing_name
 
     def clean_user(self):
