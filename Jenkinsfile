@@ -12,6 +12,7 @@ pipeline {
         git(url: 'https://github.com/giladouzan1/AdvancedProject.git', branch: 'main')
       }
     }
+    }
 
     stage('run rest_app') {
       steps {
