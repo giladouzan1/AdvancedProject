@@ -1,5 +1,9 @@
 pipeline {
-  agent any
+  agent {docker {
+            image 'python:alpine3.19'
+            args '-v jenkins_home:/var/jenkins_home'
+        }
+        }
   stages {
     stage('checkout code- github') {
       steps {
