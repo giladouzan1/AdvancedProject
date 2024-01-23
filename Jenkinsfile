@@ -1,21 +1,11 @@
 pipeline {
   agent any
   stages {
-    stage('Install Dependencies') {
-            steps {
-                script {
-                    sh 'chmod -R 777 /var/lib/apt/lists'
-                    sh 'apt-get update'
-                    sh 'apt-get install -y python3 python3-pip'
-                }
-            }
-    }
     stage('checkout code- github') {
       steps {
         git(url: 'https://github.com/giladouzan1/AdvancedProject.git', branch: 'main')
       }
     }
-
 
     stage('run rest_app') {
       steps {
