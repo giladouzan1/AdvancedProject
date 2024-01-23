@@ -27,17 +27,49 @@ pipeline {
         sh 'python3 docker_backend_testing.py'
       }
     }
-    environment {
-        DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials-id')
-        GITHUB_CREDENTIALS = credentials('github-credentials-id')
-        GITHUB_REPO_URL = 'https://github.com/<YOUR_GITHUB_REPO>.git'
-        IMAGE_NAME = 'your-docker-image-name'
-    }
-
     stage('run clean_environment') {
       steps {
         sh 'python3 clean_environment.py'
       }
     }
+    stage('Build Docker Image') {
+            steps {
+                script {
+                    dockerImage = docker.build("Jenkinks_Dockerhub:${BUILD_NUMBER}", '.')
+                }
+            }
+        }
+    stage('Push Docker Image to Hub') {
+            steps {
+                script {
+                    withDockerRegistry([credentialsId: "giladouzan", url: 'https://index.docker.io/v1/']) {
+                        dockerImage.push()
+                    }
+                }
+            }
+        }
+    stage('Set Compose Image Version') {
+            steps {
+                sh 'echo IMAGE_TAG=${BUILD_NUMBER} > .env'
+            }
+        }
+    stage('Run Docker Compose Up') {
+            steps {
+                sh 'docker-compose up -d'
+            }
+        }
+
+        stage('Test Dockerized App') {
+            steps {
+                sh 'python docker_backend_testing.py'
+            }
+        }
+
+        stage('Clean Environment') {
+            steps {
+                sh 'docker-compose down'
+                sh 'docker rmi your-docker-image-name:${BUILD_NUMBER}'
+            }
+        }
   }
 }
