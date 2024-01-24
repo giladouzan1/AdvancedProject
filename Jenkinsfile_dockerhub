@@ -43,7 +43,7 @@ pipeline {
     stage('Push Docker Image to Hub') {
       steps {
         // Log in to Docker Hub
-        withDockerRegistry([credentialsId: 'dockerhub_id', url: 'https://registry.hub.docker.com']) {
+        withDockerRegistry([credentialsId: 'giladouzan', url: 'https://registry.hub.docker.com']) {
         sh 'docker push devopsAdvProject/flask_api_app:latest'
         }
       }
