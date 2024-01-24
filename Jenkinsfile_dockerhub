@@ -31,57 +31,52 @@ pipeline {
       steps {
         sh 'python3 clean_environment.py'
       }
+    }
 
-     stages {
-        stage('Build Docker Image - Locally') {
-            steps {
-                script {
-                    // Build Docker image locally
-                    sh 'docker build -t devopsAdvProject/flask_api_app .'
-                }
-            }
+    stage('Build Docker Image - Locally') {
+      steps {
+          // Build Docker image locally
+          sh 'docker build -t devopsAdvProject/flask_api_app .'
         }
+    }
+
     stage('Push Docker Image to Hub') {
-            steps {
-                script {
-                    // Log in to Docker Hub
-                    withDockerRegistry([credentialsId: "giladouzan", url: 'https://registry.hub.docker.com']) {
-                    sh 'docker push devopsAdvProject/flask_api_app:latest'
-                    }
-                }
-            }
+      steps {
+        // Log in to Docker Hub
+        withDockerRegistry([credentialsId: "giladouzan", url: 'https://registry.hub.docker.com']) {
+        sh 'docker push devopsAdvProject/flask_api_app:latest'
         }
+      }
+    }
+
     stage('Set Compose Image Version') {
-            steps {
-                script {
-                    // Set version inside .env file for docker-compose
-                    sh 'echo IMAGE_TAG=${BUILD_NUMBER} > .env'
-                }
-            }
-        }
+      steps {
+        // Set version inside .env file for docker-compose
+        sh 'echo IMAGE_TAG=${BUILD_NUMBER} > .env'
+      }
+    }
 
     stage('Run Docker Compose Up') {
             steps {
                 sh 'docker-compose up -d'
             }
-        }
+    }
 
-        stage('Test Dockerized App') {
-            steps {
-                script {
-                    // Test dockerized app using docker_backend_testing.py
-                    sh 'python docker_backend_testing.py'
-                }
-            }
-        }
+    stage('Test Dockerized App') {
+      steps {
 
-        stage('Clean Environment') {
-            steps {
-                sh 'docker-compose down'
-                sh 'docker rmi devopsAdvProject/flask_api_app'
-            }
-        }
+        // Test dockerized app using docker_backend_testing.py
+        sh 'python docker_backend_testing.py'
+      }
+    }
+
+    stage('Clean Environment') {
+      steps {
+        sh 'docker-compose down'
+        sh 'docker rmi devopsAdvProject/flask_api_app'
+      }
+    }
+
   }
 }
-}
-}
+
