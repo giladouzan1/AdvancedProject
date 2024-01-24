@@ -40,7 +40,7 @@ pipeline {
     stage('Build Docker Image - Locally') {
       steps {
           // Build Docker image locally
-          sh 'docker build -t devopsadproject/flask_api_app .'
+          sh 'docker build -t giladouzan/flask_api_app .'
         }
     }
 
@@ -48,7 +48,7 @@ pipeline {
       steps {
         // Log in to Docker Hub
         withDockerRegistry([credentialsId: 'dockerhub_ID', url: 'https://registry.hub.docker.com']) {
-        sh 'docker push devopsadproject/flask_api_app:latest'
+        sh 'docker push giladouzan/flask_api_app:latest'
         }
       }
     }
@@ -77,7 +77,7 @@ pipeline {
     stage('Clean Environment') {
       steps {
         sh 'docker-compose down'
-        sh 'docker rmi devopsadproject/flask_api_app'
+        sh 'docker rmi giladouzan/flask_api_app'
       }
     }
 
