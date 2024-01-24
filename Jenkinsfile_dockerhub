@@ -36,7 +36,7 @@ pipeline {
     stage('Build Docker Image - Locally') {
       steps {
           // Build Docker image locally
-          sh 'docker build -t devopsAdvProject/flask_api_app .'
+          sh 'docker build -t devopsadproject/flask_api_app .'
         }
     }
 
@@ -73,7 +73,7 @@ pipeline {
     stage('Clean Environment') {
       steps {
         sh 'docker-compose down'
-        sh 'docker rmi devopsAdvProject/flask_api_app'
+        sh 'docker rmi devopsadproject/flask_api_app'
       }
     }
 
