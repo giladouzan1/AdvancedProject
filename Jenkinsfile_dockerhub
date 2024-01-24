@@ -1,58 +1,65 @@
 pipeline {
   agent any
   stages {
+
     stage('checkout code- github') {
       steps {
         git(url: 'https://github.com/giladouzan1/AdvancedProject.git', branch: 'main')
       }
     }
 
+    stage('Install Requirements') {
+            steps {
+                // Install pip packages or other dependencies if needed
+                sh 'pip3 install -r requirements.txt'
+            }
+        }
+
     stage('run rest_app') {
       steps {
-        sh 'pip3 install -r requirements.txt'
         sh 'nohup python3 rest_app.py &'
       }
     }
 
     stage('run backend_testing') {
       steps {
-        sh 'pwd'
         sh 'python3 backend_testing.py'
       }
     }
 
-    stage('run docker_backend_testing') {
-      steps {
-        sh 'pwd'
-        sh 'python3 docker_backend_testing.py'
-      }
-    }
     stage('run clean_environment') {
       steps {
         sh 'python3 clean_environment.py'
       }
-    }
-    stage('Build Docker Image') {
+
+     stages {
+        stage('Build Docker Image - Locally') {
             steps {
                 script {
-                    dockerImage = docker.build("Jenkinks_Dockerhub:${BUILD_NUMBER}", '.')
+                    // Build Docker image locally
+                    sh 'docker build -t devopsAdvProject/flask_api_app .'
                 }
             }
         }
     stage('Push Docker Image to Hub') {
             steps {
                 script {
-                    withDockerRegistry([credentialsId: "giladouzan", url: 'https://index.docker.io/v1/']) {
-                        dockerImage.push()
+                    // Log in to Docker Hub
+                    withDockerRegistry([credentialsId: "giladouzan", url: 'https://registry.hub.docker.com']) {
+                    sh 'docker push devopsAdvProject/flask_api_app:latest'
                     }
                 }
             }
         }
     stage('Set Compose Image Version') {
             steps {
-                sh 'echo IMAGE_TAG=${BUILD_NUMBER} > .env'
+                script {
+                    // Set version inside .env file for docker-compose
+                    sh 'echo IMAGE_TAG=${BUILD_NUMBER} > .env'
+                }
             }
         }
+
     stage('Run Docker Compose Up') {
             steps {
                 sh 'docker-compose up -d'
@@ -61,14 +68,17 @@ pipeline {
 
         stage('Test Dockerized App') {
             steps {
-                sh 'python docker_backend_testing.py'
+                script {
+                    // Test dockerized app using docker_backend_testing.py
+                    sh 'python docker_backend_testing.py'
+                }
             }
         }
 
         stage('Clean Environment') {
             steps {
                 sh 'docker-compose down'
-                sh 'docker rmi your-docker-image-name:${BUILD_NUMBER}'
+                sh 'docker rmi devopsAdvProject/flask_api_app'
             }
         }
   }

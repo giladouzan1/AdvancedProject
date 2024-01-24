@@ -27,7 +27,7 @@ class BackEndTests:
 
 
 if __name__ == "__main__":
-    backend_test = BackEndTests(user_id=8, name='Gilad')
+    backend_test = BackEndTests(user_id=9, name='Gilad')
     backend_test.test_create_user()
     backend_test.test_get_user()
     backend_test.test_put_user()
