@@ -1,7 +1,11 @@
 pipeline {
   agent any
   stages {
-
+    stage('Set Default Docker Context') {
+            steps {
+                sh 'docker context use default'
+            }
+            }
     stage('checkout code- github') {
       steps {
         git(url: 'https://github.com/giladouzan1/AdvancedProject.git', branch: 'main')
