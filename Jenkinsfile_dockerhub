@@ -48,7 +48,7 @@ pipeline {
       steps {
         // Log in to Docker Hub
         withDockerRegistry([credentialsId: 'dockerhub_ID', url: 'https://registry.hub.docker.com']) {
-        sh 'docker push devopsAdvProject/flask_api_app:latest'
+        sh 'docker push devopsadproject/flask_api_app:latest'
         }
       }
     }
