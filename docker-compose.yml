@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  backend:
+    build: .
+    container_name: my_container
+    ports:
+      - "5003:5000"
+    environment:
+      - MYSQL_HOST=db  # Connect to the database container named "db"
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_DATABASE=users
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0  # Use MySQL image instead of Postgres
+    environment:
+      MYSQL_ROOT_PASSWORD: password  # Set root password for initial setup
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: users
+    volumes:
+      - ./mysql-data:/var/lib/mysql  # Persist database data
