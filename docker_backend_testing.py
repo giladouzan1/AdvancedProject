@@ -8,6 +8,7 @@ class BackEndTests:
     def __init__(self, user_id, name):
         self.user_id = user_id
         self.name = name
+        self.new_name = 'ofir'
 
     def test_create_user(self):
         requests.post(f'http://127.0.0.1:5000/users/{self.user_id}', json={"user_name": self.name})
@@ -17,8 +18,9 @@ class BackEndTests:
         assert res.status_code == 200
 
     def test_put_user(self):
-        res = requests.put(f'http://127.0.0.1:5000/users/{self.user_id}')
+        res = requests.put(f'http://127.0.0.1:5000/users/{self.user_id}', json={"user_name": self.new_name})
         assert res.status_code == 200
+        assert self.name != res.json()['user_name']
 
     def test_clean_user(self):
         res = requests.delete(f'http://127.0.0.1:5000/users/{self.user_id}')
