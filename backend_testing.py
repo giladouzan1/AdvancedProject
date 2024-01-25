@@ -1,5 +1,7 @@
 import requests
 from db_connector import DBConnector
+# Testing for Backend env, check Post option using REST API -> Submit a GET request to check  that the user created
+# -> Check posted data was stored inside DB (users table)
 
 db_connector = DBConnector()
 
@@ -19,13 +21,11 @@ class BackEndTests:
     def check_data(self):
         existing_name = db_connector.select_id(self.user_id)
         print(existing_name)
-        # print(existing_name[1])
         assert self.name == existing_name
 
     def clean_user(self):
         res = requests.delete(f'http://127.0.0.1:5000/users/{self.user_id}')
         assert res.status_code == 200
-        # db_connector.delete_user(self.user_id)
 
 
 if __name__ == "__main__":

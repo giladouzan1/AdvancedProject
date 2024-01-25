@@ -1,5 +1,8 @@
 import requests
 
+# This file clean all the envs after the testing
+
+
 try:
     response = requests.get('http://127.0.0.1:5000/stop_server')
     response.raise_for_status()  # Raise an exception for non-200 status codes
