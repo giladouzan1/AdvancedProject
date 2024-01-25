@@ -4,7 +4,7 @@ import pymysql
 
 connection = pymysql.connect(host='127.0.0.1', user='root', password='pythoncourse', database='MyDB_AdvancedProject')
 
-#create the table
+# create the table
 cursor = connection.cursor()
 cursor.execute("""CREATE TABLE users (
     user_id INT PRIMARY KEY,
