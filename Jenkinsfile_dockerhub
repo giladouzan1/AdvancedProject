@@ -61,9 +61,9 @@ pipeline {
     }
 
     stage('Run Docker Compose Up') {
-            steps {
+      steps {
                 sh 'docker-compose up -d'
-            }
+      }
     }
 
     stage('Test Dockerized App') {
@@ -80,7 +80,6 @@ pipeline {
         sh 'docker rmi giladouzan/flask_api_app'
       }
     }
-
   }
 }
 
