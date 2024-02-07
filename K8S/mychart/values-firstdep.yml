@@ -12,3 +12,29 @@ service:
     - port: 5000
       targetPort: 5000
       nodePort: 30000 
+# Set the name of your Helm chart
+name: my-chart
+
+# MySQL configurations
+mysql:
+  enabled: true  # Set to false if you don't need MySQL
+  image:
+    repository: mysql
+    tag: 8.0  # Adjust the tag as needed
+  rootPassword: "your_secure_password"  # Replace with a strong password
+  database: my_database
+
+  # Number of MySQL replicas
+  replicas: 1
+
+  # Resource requests and limits (adjust as needed)
+  resources:
+    requests:
+      cpu: 100m
+      memory: 512Mi
+    limits:
+      cpu: 200m
+      memory: 1Gi
+
+# Other configurations for your deployment can go here
+
