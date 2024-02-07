@@ -5,9 +5,9 @@ image:
   tag: latest
 
 service:
-  type: LoadBalancer
-  ports:
-    - name: http
-      port: 80
-      targetPort: 5000
-      protocol: TCP
+  type: ClusterIP
+    selector:
+      component: app
+    ports:
+      - port: 5000
+        targetPort: 5000
