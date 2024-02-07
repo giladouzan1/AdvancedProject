@@ -7,7 +7,7 @@ image:
 service:
   type: ClusterIP
   selector:
-      component: app
+    component: app
     ports:
       - port: 5000
         targetPort: 5000
