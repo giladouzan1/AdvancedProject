@@ -1,0 +1,9 @@
+replicaCount: 5
+
+image:
+  repository: giladouzan/flask_api_app
+  tag: tagname
+
+service:
+  type: LoadBalancer
+
