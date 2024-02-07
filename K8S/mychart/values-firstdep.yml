@@ -2,8 +2,12 @@ replicaCount: 5
 
 image:
   repository: giladouzan/flask_api_app
-  tag: tagname
+  tag: latest
 
 service:
   type: LoadBalancer
-
+  ports:
+    - name: http
+      port: 80
+      targetPort: 5000
+      protocol: TCP
