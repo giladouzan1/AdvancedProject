@@ -8,6 +8,6 @@ service:
   type: LoadBalancer
   ports:
     - name: http
-      port: 5003
+      port: 80
       targetPort: 5000
       protocol: TCP
