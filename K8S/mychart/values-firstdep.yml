@@ -5,9 +5,10 @@ image:
   tag: latest
 
 service:
-  type: ClusterIP
+  type: NodePort
   selector:
     component: app
-    ports:
-      - port: 5000
-        targetPort: 5000
+  ports:
+    - port: 5000
+      targetPort: 5000
+      nodePort: 30000 
