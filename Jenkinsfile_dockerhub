@@ -27,7 +27,10 @@ pipeline {
 
     stage('run backend_testing') {
       steps {
+        sh 'docker-compose up -d backend'
         sh 'python3 backend_testing.py'
+        sh 'docker stop my_container'
+        sh 'docker rm my_container'
       }
     }
 
