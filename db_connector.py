@@ -12,7 +12,15 @@ class DBConnector:
             self.user = user
             self.passwd = passwd
             self.conn = pymysql.connect(host=self.host, port=self.port, user=self.user, passwd=self.passwd, db=self.db)
-            self.cursor = self.conn.cursor()
+            with self.conn.cursor() as cursor:
+                cursor.execute("""
+                CREATE TABLE IF NOT EXISTS users (
+                    user_id INT PRIMARY KEY,
+                    user_name VARCHAR(50) NOT NULL,
+                    creation_date VARCHAR(50) NOT NULL
+                );
+            """)
+                self.conn.commit()
 
         except pymysql.Error as e:
             print(f"Error during database connection: {e}")
