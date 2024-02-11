@@ -4,7 +4,7 @@ import pymysql
 
 class DBConnector:
 
-    def __init__(self, host='host.docker.internal', port=3306, user='root', passwd='pythoncourse', db='MyDB_AdvancedProject'):
+    def __init__(self, host='db', port=3306, user='user', passwd='password', db='users'):
         try:
             self.db = db
             self.host = host
