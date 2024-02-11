@@ -1,21 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my_flask_api
-  labels:
-    app: my_flask_api
+  name: my-flask-app
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: my_flask_api
+      app: my-flask-app
   template:
     metadata:
       labels:
-        app: my_flask_api
+        app: my-flask-app
     spec:
       containers:
-      - name: my_flask_api
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+      - name: my-flask-app
+        image: {{ .Values.image.repository }}
         ports:
-        - containerPort: {{ .Values.service.targetPort }}
+        - containerPort: {{ .Values.appPort }}
+          name: http
