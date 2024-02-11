@@ -1,17 +1,13 @@
-import mysql.connector
-import pymysql
+import requests
 
+url = 'http://127.0.0.1:5000/users/3'
+data = {"user_name": "Gilad"}
 
-connection = pymysql.connect(host='127.0.0.1', user='root', password='pythoncourse', database='MyDB_AdvancedProject')
+try:
+    response = requests.post(url, json=data)
+    response.raise_for_status()  # Check for HTTP errors
 
-# create the table
-cursor = connection.cursor()
-cursor.execute("""CREATE TABLE users (
-    user_id INT PRIMARY KEY,
-    user_name VARCHAR(50) NOT NULL,
-    creation_date VARCHAR(50)
-);
-""")
-connection.commit()
-cursor.close()
-connection.close()
+    print(response.json())
+except requests.exceptions.RequestException as e:
+    print(f"Error: {e}")
+    # Print additional information if needed, such as the server's status and logs
