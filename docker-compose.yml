@@ -7,7 +7,7 @@ services:
        - ./mydb:/var/lib/mysql
      environment:
        MYSQL_ROOT_PASSWORD: pythoncourse
-       MYSQL_DATABASE: mydb
+       MYSQL_DATABASE: my_db
        MYSQL_USER: user
        database_host: "host.docker.internal"
      ports:
