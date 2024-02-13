@@ -9,7 +9,7 @@ class FrontEndTests:
         driver_path = os.environ.get('DRIVER_PATH')
         self.driver = webdriver.Chrome(service=Service(driver_path))
         self.driver.implicitly_wait(10)
-        self.driver.get(f'http://127.0.0.1:5001/users/get_user_data/{user_id}')
+        self.driver.get(f'http://127.0.0.1:3001/users/get_user_data/{user_id}')
 
     def check_name(self):
         user_name_element = self.driver.find_element(By.ID, "user")

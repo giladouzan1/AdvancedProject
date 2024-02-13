@@ -12,10 +12,10 @@ class BackEndTests:
         self.name = name
 
     def check_post(self):
-        requests.post(f'http://127.0.0.1:5000/users/{self.user_id}', json={"user_name": self.name})
+        requests.post(f'http://127.0.0.1:3000/users/{self.user_id}', json={"user_name": self.name})
 
     def get_user(self):
-        res = requests.get(f'http://127.0.0.1:5000/users/{self.user_id}')
+        res = requests.get(f'http://127.0.0.1:3000/users/{self.user_id}')
         assert res.status_code == 200
 
     def check_data(self):
@@ -24,7 +24,7 @@ class BackEndTests:
         assert self.name == existing_name
 
     def clean_user(self):
-        res = requests.delete(f'http://127.0.0.1:5000/users/{self.user_id}')
+        res = requests.delete(f'http://127.0.0.1:3000/users/{self.user_id}')
         assert res.status_code == 200
 
 

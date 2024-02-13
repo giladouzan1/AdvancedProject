@@ -11,19 +11,19 @@ class BackEndTests:
         self.new_name = 'ofir'
 
     def test_create_user(self):
-        requests.post(f'http://127.0.0.1:5000/users/{self.user_id}', json={"user_name": self.name})
+        requests.post(f'http://127.0.0.1:3000/users/{self.user_id}', json={"user_name": self.name})
 
     def test_get_user(self):
-        res = requests.get(f'http://127.0.0.1:5000/users/{self.user_id}')
+        res = requests.get(f'http://127.0.0.1:3000/users/{self.user_id}')
         assert res.status_code == 200
 
     def test_put_user(self):
-        res = requests.put(f'http://127.0.0.1:5000/users/{self.user_id}', json={"user_name": self.new_name})
+        res = requests.put(f'http://127.0.0.1:3000/users/{self.user_id}', json={"user_name": self.new_name})
         assert res.status_code == 200
         assert self.name != res.json()['user_name']
 
     def test_clean_user(self):
-        res = requests.delete(f'http://127.0.0.1:5000/users/{self.user_id}')
+        res = requests.delete(f'http://127.0.0.1:3000/users/{self.user_id}')
         assert res.status_code == 200
         # db_connector.delete_user(self.user_id)
 

@@ -1,25 +1,41 @@
-version: '3.8'
-
+version: "3.7"
 services:
-  backend:
-    build: .
-    container_name: my_container
-    ports:
-      - "5003:5000"
-    environment:
-      - MYSQL_HOST=db  # Connect to the database container named "db"
-      - MYSQL_USER=user
-      - MYSQL_PASSWORD=password
-      - MYSQL_DATABASE=users
+  db:
+     image: mysql:8.0
+     container_name: database
+     volumes:
+       - ./mydb:/var/lib/mysql
+     environment:
+       MYSQL_ROOT_PASSWORD: pythoncourse
+       MYSQL_DATABASE: mydb
+       MYSQL_USER: user
+       database_host: "host.docker.internal"
+     ports:
+       - "3307:3306"
+     expose:
+       - "3306"
+#     healthcheck:
+#       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+#       interval: 10s
+#       timeout: 5s
+#       retries: 5
+
+  devops-rest:
     depends_on:
       - db
-
-  db:
-    image: mysql:8.0  # Use MySQL image instead of Postgres
+    image: giladouzan/flask_api_app:latest
+    ports:
+      - 3000:3000
     environment:
-      MYSQL_ROOT_PASSWORD: password  # Set root password for initial setup
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-      MYSQL_DATABASE: users
-    volumes:
-      - ./mysql-data:/var/lib/mysql  # Persist database data
+      MYSQL_DB_HOST: db:3306
+      MYSQL_DB_USER: root
+      MYSQL_DB_PASSWORD: pythoncourse
+      PORT: 3000
+#    healthcheck:
+#      test:  curl --fail http://localhost:5000/users/1 || exit 1
+#      interval: 10s
+#      timeout: 5s
+#      retries: 5
+
+volumes:
+    mydb:

@@ -1,13 +1,14 @@
 import datetime
 import pymysql
+import os
 
 
 class DBConnector:
 
-    def __init__(self, host='db', port=3306, user='user', passwd='password', db='users'):
+    def __init__(self, host='localhost', port=3306, user='user', passwd='password', db='users'):
         try:
             self.db = db
-            self.host = host
+            self.host = os.environ.get("database_host") or host
             self.port = port
             self.user = user
             self.passwd = passwd
