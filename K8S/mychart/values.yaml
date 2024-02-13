@@ -1,6 +1,6 @@
 replicaCount: 5
 image:
-  repository: ofirzvishaboo/flask_name_api
+  repository: giladouzan/flask_api_app
   tag: latest # Or specific tag as needed
 service:
   type: LoadBalancer
