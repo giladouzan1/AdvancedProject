@@ -44,7 +44,7 @@ class DBConnector:
             cursor.execute("SELECT user_name FROM users WHERE user_id = %s", (user_id,))
             result = cursor.fetchone()
             print(result)
-        return result
+        return result[0]
     # def select_id(self, user_id):
     #     try:
     #         with self.conn.cursor() as cursor:
