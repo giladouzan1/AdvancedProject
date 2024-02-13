@@ -94,7 +94,7 @@ def user(user_id):
         request_data = request.json
         new_name = request_data.get('user_name')
         mdb_connector.update_user(user_id, new_name)
-        return {'status': 'ok', 'new username': new_name}, 200
+        return {'status': 'ok', 'new_username': new_name}, 200
     elif request.method == 'DELETE':
         mdb_connector.delete_user(user_id)
         return {'Deleted user_id': user_id}, 200

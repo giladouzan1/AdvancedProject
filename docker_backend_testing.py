@@ -20,7 +20,7 @@ class BackEndTests:
     def test_put_user(self):
         res = requests.put(f'http://127.0.0.1:3000/users/{self.user_id}', json={"user_name": self.new_name})
         assert res.status_code == 200
-        assert self.name != res.json()['user_name']
+        assert self.name != res.json()['new_username']
 
     def test_clean_user(self):
         res = requests.delete(f'http://127.0.0.1:3000/users/{self.user_id}')
