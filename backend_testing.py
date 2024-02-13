@@ -32,7 +32,7 @@ class BackEndTests:
 if __name__ == "__main__":
     backend_test = BackEndTests(user_id=3, name='Gilad')
     backend_test.check_post()
-    time.sleep(2)
+    time.sleep(10)
     backend_test.get_user()
     backend_test.check_data()
     backend_test.clean_user()

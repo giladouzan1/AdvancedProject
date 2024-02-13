@@ -1,6 +1,6 @@
 import requests
 
-url = 'http://127.0.0.1:3000/users/1'
+url = 'http://127.0.0.1:3000/users/3'
 data = {"user_name": "Amit"}
 
 try:
