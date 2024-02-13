@@ -28,72 +28,54 @@ class DBConnector:
             raise  # Raising the exception to notify the calling code about the error
 
     # This function check if a user exist in the DB and return True or the error
+
     def user_exists(self, user_id):
-        try:
-             query = "SELECT * FROM users WHERE user_id = %s"
-             self.cursor.execute(query, (user_id,))
-             return bool(self.cursor.fetchone())
-        except pymysql.Error as e:
-            print(f"Error checking if user exists: {e}")
-            raise
+        with self.conn.cursor() as cursor:
+            cursor.execute("SELECT user_name FROM users WHERE user_id = %s", (user_id,))
+            result = cursor.fetchone()
+        return result[0]  # Assuming a single result is expected
 
     # This function add a new user to the DB
     def add_user(self, user_id, user_name):
-        try:
-            creation_date = datetime.datetime.now().strftime("%I:%M%p on %B %d, %Y")
-            query = "INSERT INTO users (user_id, user_name, creation_date) VALUES (%s, %s,%s)"
-            print(creation_date)
-            self.cursor.execute(query, (user_id, user_name, creation_date))
+        creation_date = datetime.datetime.now().strftime("%I:%M%p on %B %d, %Y")
+        with self.conn.cursor() as cursor:
+            cursor.execute("INSERT INTO users (user_name, user_id) VALUES (%s, %s)",
+                           (user_name, user_id, creation_date))  # Prepared statement
             self.conn.commit()
-        except pymysql.Error as e:
-            print(f"Error adding user: {e}")
-            raise
+            num_affected_rows = cursor.rowcount
+            if num_affected_rows > 0:
+                return 200
 
     # This function get the User ID and return the Username
     def get_user(self, user_id):
-        try:
-            query = "SELECT user_name FROM users WHERE user_id = %s"
-            self.cursor.execute(query, (user_id,))
-            return self.cursor.fetchone()
+        with self.conn.cursor() as cursor:
+            cursor.execute("SELECT user_name FROM users WHERE user_id = %s", (user_id,))
+            result = cursor.fetchone()
+        return result[0]  # Assuming a single result is expected
 
-        except pymysql.Error as e:
-            print(f"Error getting user: {e}")
-            raise
-
-    def select_id(self, user_id):
-        try:
-            with self.conn.cursor() as cursor:
-                cursor.execute("SELECT user_name FROM users WHERE user_id = %s", (user_id,))
-                result = cursor.fetchone()
-            return result[0]  # Assuming a single result is expected
-        except pymysql.Error as e:
-            print(f"Error selecting user_id: {e}")
-            raise
+    # def select_id(self, user_id):
+    #     try:
+    #         with self.conn.cursor() as cursor:
+    #             cursor.execute("SELECT user_name FROM users WHERE user_id = %s", (user_id,))
+    #             result = cursor.fetchone()
+    #         return result[0]  # Assuming a single result is expected
+    #     except pymysql.Error as e:
+    #         print(f"Error selecting user_id: {e}")
+    #         raise
 
     # This function is updating the user in the DB, after PUT REST API method.
-    def update_user(self, user_id, user_name):
-        try:
-            if self.user_exists(user_id):
-                query = "UPDATE users SET user_name = %s WHERE user_id = %s"
-                self.cursor.execute(query, (user_name, user_id))
-                self.conn.commit()
-                return True
-            else:
-                return False
-        except pymysql.Error as e:
-            print(f"Error updating user: {e}")
-            raise
+    def update_user(self, user_id, new_name):
+        with self.conn.cursor() as cursor:  # Use context manager for cursor
+            cursor.execute("UPDATE users SET user_name = %s WHERE user_id = %s",
+                           (new_name, user_id))  # Prepared statement
+        self.conn.commit()
 
     # This function delete the user from the DB
     def delete_user(self, user_id):
-        try:
-            if self.user_exists(user_id):
-                query = "DELETE FROM users WHERE user_id = %s"
-                self.cursor.execute(query, (user_id,))
-                self.conn.commit()
-                return True
-            else:
-                return False
-        except pymysql.Error as e:
-            print(f"Error deleting user: {e}")
-            raise
+        with self.conn.cursor() as cursor:
+            cursor.execute("DELETE FROM users WHERE user_id = %s", (user_id,))
+        self.conn.commit()
+        return 200
+
+    def __del__(self):
+        self.conn.close()  # Close connection when object is destroyed

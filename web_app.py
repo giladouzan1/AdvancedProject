@@ -12,7 +12,7 @@ mdb_connector = DBConnector()
 def user(user_id):
     try:
         if request.method == 'GET':
-            res = requests.get(f'http://127.0.0.1:5000/users/{user_id}')
+            res = requests.get(f'http://127.0.0.1:3000/users/{user_id}')
             name = res.json()["user_name"]
             print(name)
             # user_name = mdb_connector.select_id(user_id)
