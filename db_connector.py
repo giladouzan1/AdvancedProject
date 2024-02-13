@@ -5,7 +5,7 @@ import os
 
 class DBConnector:
 
-    def __init__(self, host='localhost', port=3306, user='user', passwd='password', db='users'):
+    def __init__(self, host='localhost', port=3306, user='root', passwd='pythoncourse', db='my_db'):
         try:
             self.db = db
             self.host = os.environ.get("database_host") or host
