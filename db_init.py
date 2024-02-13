@@ -1,7 +1,7 @@
 import requests
 
-url = 'http://127.0.0.1:3000/users/4'
-data = {"user_name": "Amit"}
+url = 'http://127.0.0.1:3000/users/5'
+data = {"user_name": "OFIR"}
 
 try:
     response = requests.post(url, json=data)
