@@ -15,7 +15,7 @@ EXPOSE 3000
 
 # Define environment variable
 #ENV FLASK_APP=rest_app.py
-ENV database_host host.docker.internal
+ENV database_host 10.1.0.162
 
 # Run the application
 CMD ["python", "rest_app.py"]
