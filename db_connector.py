@@ -8,7 +8,7 @@ class DBConnector:
     def __init__(self, host='localhost', port=3306, user='root', passwd='pythoncourse', db='MyDB_AdvancedProject'):
         try:
             self.db = db
-            self.host = os.environ.get("database_host") or host
+            self.host = host #os.environ.get("database_host") or host
             self.port = port
             self.user = user
             self.passwd = passwd
@@ -43,7 +43,8 @@ class DBConnector:
         with self.conn.cursor() as cursor:
             cursor.execute("SELECT user_name FROM users WHERE user_id = %s", (user_id,))
             result = cursor.fetchone()
-        return result[0]
+            print(result)
+        return result
     # def select_id(self, user_id):
     #     try:
     #         with self.conn.cursor() as cursor:

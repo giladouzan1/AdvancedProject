@@ -14,8 +14,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 3000
 
 # Define environment variable
-ENV FLASK_APP=rest_app.py
+#ENV FLASK_APP=rest_app.py
 ENV database_host host.docker.internal
 
 # Run the application
-CMD ["flask", "run"]
+CMD ["python", "rest_app.py"]

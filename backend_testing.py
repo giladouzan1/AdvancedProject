@@ -1,3 +1,5 @@
+import time
+
 import requests
 from db_connector import DBConnector
 # Testing for Backend env, check Post option using REST API -> Submit a GET request to check  that the user created
@@ -28,8 +30,9 @@ class BackEndTests:
 
 
 if __name__ == "__main__":
-    backend_test = BackEndTests(user_id=10, name='Amit')
+    backend_test = BackEndTests(user_id=1, name='Amit')
     backend_test.check_post()
+    time.sleep(2)
     backend_test.get_user()
     backend_test.check_data()
     backend_test.clean_user()
