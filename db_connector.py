@@ -27,19 +27,11 @@ class DBConnector:
             print(f"Error during database connection: {e}")
             raise  # Raising the exception to notify the calling code about the error
 
-    # This function check if a user exist in the DB and return True or the error
-
-    def user_exists(self, user_id):
-        with self.conn.cursor() as cursor:
-            cursor.execute("SELECT user_name FROM users WHERE user_id = %s", (user_id,))
-            result = cursor.fetchone()
-        return result[0]  # Assuming a single result is expected
-
     # This function add a new user to the DB
     def add_user(self, user_id, user_name):
         creation_date = datetime.datetime.now().strftime("%I:%M%p on %B %d, %Y")
         with self.conn.cursor() as cursor:
-            cursor.execute("INSERT INTO users (user_name, user_id) VALUES (%s, %s)",
+            cursor.execute("INSERT INTO users (user_name, user_id, creation_date) VALUES (%s, %s, %s)",
                            (user_name, user_id, creation_date))  # Prepared statement
             self.conn.commit()
             num_affected_rows = cursor.rowcount
@@ -51,8 +43,7 @@ class DBConnector:
         with self.conn.cursor() as cursor:
             cursor.execute("SELECT user_name FROM users WHERE user_id = %s", (user_id,))
             result = cursor.fetchone()
-        return result[0]  # Assuming a single result is expected
-
+        return result[0]
     # def select_id(self, user_id):
     #     try:
     #         with self.conn.cursor() as cursor:

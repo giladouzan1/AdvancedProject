@@ -19,8 +19,7 @@ class BackEndTests:
         assert res.status_code == 200
 
     def check_data(self):
-        existing_name = db_connector.user_exists(self.user_id)
-        print(existing_name)
+        existing_name = db_connector.get_user(self.user_id)
         assert self.name == existing_name
 
     def clean_user(self):
@@ -29,7 +28,7 @@ class BackEndTests:
 
 
 if __name__ == "__main__":
-    backend_test = BackEndTests(user_id=2, name='Amit')
+    backend_test = BackEndTests(user_id=10, name='Amit')
     backend_test.check_post()
     backend_test.get_user()
     backend_test.check_data()

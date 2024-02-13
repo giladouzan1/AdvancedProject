@@ -11,7 +11,7 @@ db_connector = DBConnector()
 def create_user(user_id):
     try:
         user_name = request.json.get('user_name')
-        if db_connector.user_exists(user_id):
+        if db_connector.get_user(user_id):
             return jsonify({"status": "error", "reason": "id already exists"}), 500
 
         db_connector.add_user(user_id, user_name)
@@ -38,7 +38,7 @@ def get_user(user_id):
 def update_user(user_id):
     try:
         user_name = request.json.get('user_name')
-        if db_connector.user_exists(user_id):
+        if db_connector.get_user(user_id):
             db_connector.update_user(user_id, user_name[0])
             return {'status': 'ok', 'user_name': user_name}, 200
         else:
@@ -51,7 +51,7 @@ def update_user(user_id):
 @app.route('/users/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):
     try:
-        if db_connector.user_exists(user_id):
+        if db_connector.get_user(user_id):
             db_connector.delete_user(user_id)
             return {'status': 'ok', 'Deleted_user_id': user_id}, 200
         else:
