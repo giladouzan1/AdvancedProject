@@ -4,4 +4,10 @@ image:
   tag: latest # Or specific tag as needed
 service:
   type: LoadBalancer
-appPort: 5000 # Optional if different from container port
+appPort: 3000 # Optional if different from container port
+database:
+  host: "db" # Assuming service name from docker-compose.yml
+  port: 3306
+  user: "root"
+  password: "pythoncourse"
+  db: "my_db"

@@ -18,3 +18,12 @@ spec:
         ports:
         - containerPort: {{ .Values.appPort }}
           name: http
+        env:
+          - name: MYSQL_HOST
+            value: mysql-service
+          - name: MYSQL_USER
+            value: { { .Values.database.user } }
+          - name: MYSQL_PASSWORD
+            value: { { .Values.database.password } }
+          # Add other environment variables as needed
+        command: ["sh", "-c", "python3 rest_app.py"]

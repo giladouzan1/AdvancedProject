@@ -11,11 +11,11 @@ COPY . /app
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Make port 5000 available to the world outside this container
-EXPOSE 3000
+EXPOSE 5000
 
 # Define environment variable
 #ENV FLASK_APP=rest_app.py
-ENV database_host 10.1.0.162
+ENV database_host mysql-service
 
 # Run the application
 CMD ["python", "rest_app.py"]
