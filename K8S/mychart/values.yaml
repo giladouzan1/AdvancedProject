@@ -1,4 +1,4 @@
-replicaCount: 5
+replicaCount: 2
 image:
   repository: giladouzan/flask_api_app
   tag: latest # Or specific tag as needed
