@@ -10,6 +10,7 @@ spec:
   - protocol: TCP
     targetPort: {{ .Values.appPort }}
     port: 80
+    name: http
 ---
 apiVersion: v1
 kind: Service
