@@ -8,7 +8,7 @@ services:
      environment:
        MYSQL_ROOT_PASSWORD: pythoncourse
        MYSQL_DATABASE: MyDB_AdvancedProject
-       MYSQL_USER: user
+       MYSQL_USER: root
        database_host: "host.docker.internal"
      ports:
        - "3307:3306"
@@ -27,6 +27,7 @@ services:
     ports:
       - "3000:3000"
     environment:
+      database_host: host.docker.internal
       MYSQL_DB_HOST: db:3306
       MYSQL_DB_USER: root
       MYSQL_DB_PASSWORD: pythoncourse
