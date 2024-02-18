@@ -1,10 +1,10 @@
 import requests
 
 url = 'http://127.0.0.1:3000/users/2'
-# data = {"user_name": "Gilad"}
+data = {"user_name": "Gilad"}
 
 try:
-    response = requests.delete(url)
+    response = requests.post(url, json=data)
     response.raise_for_status()  # Check for HTTP errors
 
     print(response.json())

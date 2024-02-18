@@ -6,8 +6,8 @@ service:
   type: LoadBalancer
 appPort: 3000 # Optional if different from container port
 database:
-  host: "db" # Assuming service name from docker-compose.yml
+  host: db # Assuming service name from docker-compose.yml
   port: 3306
-  user: "root"
-  password: "pythoncourse"
-  db: "MyDB_AdvancedProject"
+  user: root
+  password: pythoncourse
+  db: MyDB_AdvancedProject
